@@ -1,2 +1,1 @@
-http://www.fornesia.com  
-Indonesian Online Sharing Community Forum  
+vps setup by Mr's Creating DummY
