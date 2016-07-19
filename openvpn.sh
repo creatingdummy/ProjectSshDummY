@@ -44,7 +44,7 @@ if [ -e /etc/openvpn/server.conf ]; then
 	done
 else
 	echo 'Selamat Datang di quick OpenVPN installer'
-	echo "Dimodifikasi oleh www.fornesia.com"
+	echo "Dimodifikasi oleh Creating DummY"
 	echo ""
 	# OpenVPN setup and first user creation
 	echo "1st alamat IPv4 yang ingin diinstall OpenVPN"
@@ -58,7 +58,7 @@ else
 	echo "Hal ini dapat berguna untuk menghubungkan ke restrictive networks"
 	read -p "Listen port 53 [y/n]:" -e -i y ALTPORT
 	echo ""
-	echo "Masukan Nama Anda untuk cert klien"
+	echo "Masukan Nama Anda untuk cert client"
 	echo "Silakan, gunakan satu kata saja, tidak ada karakter khusus"
 	read -p "Nama Client: " -e -i client CLIENT
 	echo ""
@@ -78,8 +78,8 @@ else
 	cd /etc/openvpn/easy-rsa/2.0/
 	# Let's fix one thing first...
 	cp -u -p openssl-1.0.0.cnf openssl.cnf
-	# Bad NSA - 1024 bits was the default for Debian Wheezy and older
-	#sed -i 's|export KEY_SIZE=1024|export KEY_SIZE=2048|' /etc/openvpn/easy-rsa/2.0/vars
+	# Bad NSA - 2048 bits was the default for Debian Wheezy and older
+	#sed -i 's|export KEY_SIZE=2048|export KEY_SIZE=2048|' /etc/openvpn/easy-rsa/2.0/vars
 	# Create the PKI
 	. /etc/openvpn/easy-rsa/2.0/vars
 	. /etc/openvpn/easy-rsa/2.0/clean-all
@@ -108,7 +108,7 @@ mssfix 1450
 ca /etc/openvpn/ca.crt
 cert /etc/openvpn/server.crt
 key /etc/openvpn/server.key
-dh /etc/openvpn/dh1024.pem
+dh /etc/openvpn/dh2048.pem
 plugin /usr/lib/openvpn/openvpn-auth-pam.so /etc/pam.d/login
 client-cert-not-required
 username-as-common-name
@@ -129,7 +129,7 @@ verb 3
 END
 
 	cd /etc/openvpn/easy-rsa/2.0/keys
-	cp ca.crt ca.key dh1024.pem server.crt server.key /etc/openvpn
+	cp ca.crt ca.key dh2048.pem server.crt server.key /etc/openvpn
 	sed -i "s/port 1194/port $PORT/" /etc/openvpn/server.conf
 	# Listen at port 53 too if user wants that
 	if [ $ALTPORT = 'y' ]; then
